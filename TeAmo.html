@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Valentín</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffe6e6;
+            margin: 0;
+            flex-direction: column;
+            text-align: center;
+            overflow: hidden;
+        }
+        .container {
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #ff3366;
+            font-size: 2.5rem;
+        }
+        button {
+            font-size: 1.2rem;
+            padding: 15px 30px;
+            margin: 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .yes-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .no-btn {
+            background-color: #f44336;
+            color: white;
+        }
+        .no-btn:disabled {
+            pointer-events: none;
+        }
+        .no-btn.moving {
+            animation: moveButton 0.5s infinite alternate;
+        }
+        @keyframes moveButton {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(20px);
+            }
+        }
+        .heart {
+            font-size: 3rem;
+            color: red;
+            animation: heartbeat 1.5s infinite;
+        }
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .message {
+            font-size: 1.5rem;
+            color: #ff3366;
+            margin-top: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>¿Quieres ser mi San Valentín por segundo año?</h1>
+    <button class="yes-btn" id="yesBtn">Sí</button>
+    <button class="no-btn" id="noBtn">No</button>
+</div>
+
+<!-- Área para el mensaje de "Gracias" y corazones -->
+<div id="messageContainer" class="hidden">
+    <p class="message">¡Gracias por ser mi novia! Te amo con todo mi ser 💖</p>
+    <p class="heart">❤️</p>
+</div>
+
+<script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const messageContainer = document.getElementById('messageContainer');
+
+    // Función para mover el botón "No" aleatoriamente dentro de la página
+    function moveNoButton() {
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+
+        // Generamos posiciones aleatorias para el botón
+        const randomX = Math.floor(Math.random() * (windowWidth - noBtn.offsetWidth));
+        const randomY = Math.floor(Math.random() * (windowHeight - noBtn.offsetHeight));
+
+        // Establecemos la nueva posición del botón "No"
+        noBtn.style.position = 'absolute';
+        noBtn.style.left = `${randomX}px`;
+        noBtn.style.top = `${randomY}px`;
+    }
+
+    // Cuando se hace clic en "No"
+    noBtn.addEventListener('click', () => {
+        moveNoButton();  // Mover el botón a una posición aleatoria
+        noBtn.classList.add('moving');  // Agregar la animación de movimiento
+        noBtn.disabled = true;  // Desactivar el botón "No"
+    });
+
+    // Cuando se hace clic en "Sí"
+    yesBtn.addEventListener('click', () => {
+        messageContainer.classList.remove('hidden');
+        yesBtn.disabled = true;  // Desactivar el botón de "Sí" después de hacer clic
+    });
+</script>
+
+</body>
+</html>
